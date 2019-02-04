@@ -1,0 +1,120 @@
+{
+    "name": "code-test",
+    "displayName": "code_test",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.30.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "workspaceContains: zephyr-env.*",
+        "onView: zephyr_develop_view",
+        "onView: jsonOutline"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "zephyr_develop_viewbar",
+                    "title": "Zephyr Develop",
+                    "icon": "media/dep.svg"
+                }
+            ]
+        },
+        "views": {
+            "zephyr_develop_viewbar": [
+                {
+                    "id": "zephyr_develop_view",
+                    "name": "Zephyr Develop"
+                }
+            ]
+        },
+        "menus": {
+            "view/title": [
+                {
+                    "command": "zephyr.helloWorld",
+                    "when": "view == zephyr_develop_view"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "zephyr.helloWorld",
+                    "when": "view == zephyr_develop_view"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "zephyr.helloWorld",
+                "title": "Hello World"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Zephyr Develop Tools configuration",
+            "properties": {
+                "zephyr.cmakePath": {
+                    "type": "string",
+                    "default": "cmake",
+                    "description": "Name/path of the CMake executable to use",
+                    "scope": "resource"
+                },
+                "zephyr.buildDirectory": {
+                    "type": "string",
+                    "default": "${workspaceRoot}/build",
+                    "description": "The directory where CMake build files will go",
+                    "scope": "resource"
+                },
+                "zephyr.configureArgs": {
+                    "type": "array",
+                    "description": "Additional arguments to pass to CMake when configuring",
+                    "items": {
+                        "type": "string",
+                        "title": "CMake Arguments"
+                    },
+                    "default": [],
+                    "scope": "resource"
+                },
+                "zephyr.environment": {
+                    "type": "object",
+                    "default": {},
+                    "description": "Environment variables to set when running CMake commands",
+                    "additionalProperties": {
+                        "type": "string",
+                        "description": "Value for the environment variable"
+                    },
+                    "scope": "resource"
+                },
+                "zephyr.sourceDirectory": {
+                    "type": "string",
+                    "default": "${workspaceRoot}",
+                    "description": "The directory of the root CMakeLists.txt file",
+                    "scope": "resource"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "yarn run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "yarn run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^8.10.25",
+        "typescript": "^3.1.4",
+        "vscode": "^1.1.25"
+    },
+    "dependencies": {
+        "child_process": "^1.0.2",
+        "iconv-lite": "^0.4.24",
+        "jsonc-parser": "^2.0.2",
+        "log4js": "^4.0.2"
+    }
+}
